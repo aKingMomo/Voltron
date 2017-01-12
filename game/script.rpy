@@ -4,14 +4,22 @@
 # eg. image eileen happy = "eileen_happy.png"
 
 # Declare characters used by this game.
-define e = Character('Eileen', color="#c8ffc8")
+
+
+
+init:
+    define e = Character('Eileen', color="#c8ffc8")
 
 
 # The game starts here.
 label start:
+    jump pronounTest
+label pronounTest:
 
-    e "You've created a new Ren'Py game."
+    #It seems you can't use a method in a script line, just basic variables, so I did this
+    #this is an example of how we can use proper verb and pronoun forms for pulral and singular pronouns
+    
+    $ line=verbReplace(per_pro, 'is', 'are', 'eating lunch.')
+    e '[line]'
 
-    e "Once you add a story, pictures, and music, you can release it to the world!"
 
-    return
