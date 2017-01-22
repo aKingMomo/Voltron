@@ -51,5 +51,8 @@ bytecode.rpyb
 pyanalysis.rpyb
 screens.rpyb
 log.txt
-.save
+*.save
+*.bak
+*.rpyc
+*.rpy~
 persistent
