@@ -56,3 +56,4 @@ log.txt
 *.rpyc
 *.rpy~
 persistent
+traceback.txt

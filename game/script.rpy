@@ -23,6 +23,7 @@ init python:
     Theirs = ""
     Themself = ""
     Their = ""
+    
 init:
     define e = Character('Eileen', color="#c8ffc8")
 
@@ -101,7 +102,7 @@ label otherPronoun:
             jump pronounTest
             
         "No":
-            jump PronounChoose
+            jump pronounChoose
              
     label pronounTest:
 
