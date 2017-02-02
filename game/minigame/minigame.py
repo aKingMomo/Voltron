@@ -11,6 +11,8 @@ class Enemy(pygame.sprite.Sprite):
             self.image = pygame.image.load("sprite.png").convert()
             self.image.set_colorkey(WHITE)
             self.rect = self.image.get_rect()
+            self.xspeed = 5
+            self.yspeed = 0
     
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -49,14 +51,17 @@ def main():
     y_speed = 0
  
     # Current position
-    e_x_coord = 1130
-    e_y_coord = -100
-    x_coord = 10
-    y_coord = 10
+    e_x_coord = 10
+    e_y_coord = 10
+    x_coord = 50
+    y_coord = 600
+
+    count = 0
     
     #number of enemies
     # -----Main Loop -----
     while not done:
+        
         # --- Main event
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -82,23 +87,32 @@ def main():
                     y_speed = 0
         
         # --Game logic goes here
-        if x_coord + x_speed > 0 and x_coord + x_speed < 200:
+        if x_coord + x_speed > 0 and x_coord + x_speed < 1100:
             x_coord += x_speed
             player.rect.x = x_coord
-        if y_coord + y_speed > 0 and y_coord + y_speed < 1180:
-            y_coord += y_speed
-            player.rect.y = y_coord
+        #if y_coord + y_speed >  and y_coord + y_speed < 650:
+         #   y_coord += y_speed
+        player.rect.y = y_coord
         for e in enemy_list:
-            if e.rect.y >= 720:
+            if e.rect.x >= 1300:
                 e.kill
-                go = True
             else:
-                e.rect.y += 5
-                if e.rect.y%100 == 0:
-                    go = True
-                else:
-                    go = False
-        if(len(enemy_list)<50 and go):
+                e.rect.x += e.xspeed
+                e.rect.y += e.yspeed
+                if e.rect.x == 1150: 
+                    e.xspeed = 0
+                    e.yspeed = 5
+                if e.rect.y == 120:
+                    e.xspeed = -5
+                    e.yspeed = 0
+                if e.rect.x == 10:
+                    e.xspeed = 0
+                    e.yspeed = 5
+                if e.rect.y == 230:
+                    e.xspeed = 5
+                    e.yspeed = 0
+        count += 1
+        if(len(enemy_list)<50 and count%50==0):
             enemy = Enemy()
             enemy.rect.x = e_x_coord
             enemy.rect.y = e_y_coord
