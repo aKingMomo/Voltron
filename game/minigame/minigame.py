@@ -7,6 +7,7 @@ WHITE = (255,255,255)
 CYAN = (0,255,255)
 
 
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
             pygame.sprite.Sprite.__init__(self)
@@ -67,7 +68,6 @@ class Projectile(pygame.sprite.Sprite):
                 self.rect.y += self.yspeed
                 return False
 
-
     
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -76,13 +76,13 @@ class Player(pygame.sprite.Sprite):
             self.image.set_colorkey(BLACK)
             self.rect = self.image.get_rect()
 
-    
         
 def main():
     pygame.init()
 
     size = (1280,720)
     screen = pygame.display.set_mode(size)
+
     font = pygame.font.SysFont('Calibri', 25, True, False)
 
 
@@ -94,8 +94,10 @@ def main():
     #list of all sprites
     all_sprites_list = pygame.sprite.Group()
     
+
     #list of shots
     projectile_list = pygame.sprite.Group()
+
 
     # create player
     player = Player()
@@ -117,6 +119,7 @@ def main():
     x_coord = 50
     y_coord = 600
 
+
     #are we shooting a projectile
     shoot = False
 
@@ -129,6 +132,11 @@ def main():
     #score
     score = 0
     
+
+    count = 0
+    
+    #number of enemies
+
     # -----Main Loop -----
     while not done:
         
@@ -149,11 +157,11 @@ def main():
                 elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     y_speed = 3
 
+
                 #if spacebar is down, start making new projectiles
                 elif event.key == pygame.K_SPACE:
                     shoot = True
                    
-
             # User let up on a key
             elif event.type == pygame.KEYUP:
                 # If it is an arrow key, reset vector back to zero
@@ -161,6 +169,7 @@ def main():
                     x_speed = 0
                 elif event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_w or event.key == pygame.K_s:
                     y_speed = 0
+
 
                     #when the spacebar is released, stop making new things
                 elif event.key == pygame.K_SPACE:
@@ -172,12 +181,16 @@ def main():
         
         
         #player movement
+        
+        # --Game logic goes here
+
         if x_coord + x_speed > 0 and x_coord + x_speed < 1100:
             x_coord += x_speed
             player.rect.x = x_coord
         #if y_coord + y_speed >  and y_coord + y_speed < 650:
          #   y_coord += y_speed
         player.rect.y = y_coord
+
         
         #create projectile if spacebar is held down and enough time has passed
         pcount -= 1
@@ -218,11 +231,33 @@ def main():
         ecount += 1
 
         if(len(enemy_list)<50 and ecount%50==0):
+        for e in enemy_list:
+            if e.rect.x >= 1300:
+                e.kill
+            else:
+                e.rect.x += e.xspeed
+                e.rect.y += e.yspeed
+                if e.rect.x == 1150: 
+                    e.xspeed = 0
+                    e.yspeed = 5
+                if e.rect.y == 120:
+                    e.xspeed = -5
+                    e.yspeed = 0
+                if e.rect.x == 10:
+                    e.xspeed = 0
+                    e.yspeed = 5
+                if e.rect.y == 230:
+                    e.xspeed = 5
+                    e.yspeed = 0
+        count += 1
+        if(len(enemy_list)<50 and count%50==0):
+
             enemy = Enemy()
             enemy.rect.x = e_x_coord
             enemy.rect.y = e_y_coord
             enemy_list.add(enemy)
             all_sprites_list.add(enemy)
+
 
         #update score (and count for test purposes)
         text = font.render("Current score: " + str(score) +" Count: " + str(ecount),True, WHITE)
@@ -232,6 +267,7 @@ def main():
         # --Drawing goes here        
         screen.blit(background_image, [0, 0])
         all_sprites_list.draw(screen)
+
         screen.blit(text, (600, 600))
 
         pygame.display.flip()

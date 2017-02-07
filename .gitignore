@@ -45,3 +45,15 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Game Cache
+bytecode.rpyb
+pyanalysis.rpyb
+screens.rpyb
+log.txt
+*.save
+*.bak
+*.rpyc
+*.rpy~
+persistent
+traceback.txt
