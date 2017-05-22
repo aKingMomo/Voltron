@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/pc_create.rpy", line 30: unexpected indent
+            return 
+            ^
+    
+
+Ren'Py Version: Ren'Py 6.99.12.2.2029
